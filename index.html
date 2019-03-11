@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HEX TO RGB</title>
+        <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> 
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div id="palette" class="side-nav">
+            <h1 class="side-nav__title text-center">Favourite Color Palette</h1>
+            <a href="javascript:void(0)" class="side-nav__close-btn" onclick="closeNav()">&times;</a>
+            <div class="side-nav__container">
+                <!--Fav color list-->
+            </div>
+        </div>
+        <span class="side-nav__icon" onclick="openNav()">
+            <i class="fas fa-star"></i>
+        </span>
+        
+
+        <div class="container text-center">
+
+            <h1 class="container__title mt-5">
+                <div class="row">
+                    <span class="container__title-front col-lg-2">HEX</span> 
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    <span class="container__title-back col-lg-2">RGB</span>                     
+                </div>    
+             </h1>
+
+            <div class="container__form-container">
+
+                <form id="hex2rgb-form">
+                    <div class="container__form-container__hex2rgb-form-container form-group">
+
+                        <div class="row">
+                            <div class="col col-lg-4">
+                                <label for="input-value" id="input-value-label"class="text-left">HEX</label>
+                                <input type="text" oninput="getValue()" class="container__form-container__input form-control" placeholder ="#4286F4" id="input-value" maxlength="7">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-4">
+                                <label for="output-value" id="output-value-label" class="">RGB</label>
+                                <input type="text" class="container__form-container__input form-control" id="output-value" >
+                            </div>
+                        </div>
+
+                    </div>                
+                </form>
+
+
+                <form>
+                    <div class="container__form-container__fav-name-form-container form-group">
+                        <div class="row">
+                            <div class="col col-lg-4">
+                                <label for="input-fav-color-name" class="">Fav Color Name</label>
+                                <input type="text" class="container__form-container__input form-control" id="input-fav-color-name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container__form-container__fav-name-form-button-container">
+                        <div class="row">
+                            <button type="button" class="btn btn-primary btn-fav">Favourite</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div> 
+
+        </div>
+
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script src="./app.js"></script>
+    </body>
+</html>
