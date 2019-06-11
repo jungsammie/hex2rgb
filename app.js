@@ -295,12 +295,15 @@ document.querySelector(".btn-fav").addEventListener("click",(e) => {
 
         //Add color to storage
         var result = Store.addColor(color);
+        console.log(result);
 
         //Clear the form
         document.getElementById('hex2rgb-form').reset();
         document.getElementById('input-fav-color-name').value = "";
 
         UI.showAlert("Your favourite color has added to the Palette!",'success');
+        changeBackgroundColor("#F0F0F0");
+        changeFontColor([255,255,255]);
     }
     //If color name hasn't set yet
     else if(document.getElementById("input-fav-color-name").value.length == 0) {
