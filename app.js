@@ -1,5 +1,155 @@
 let isHex2Rgb = true;
 
+$(function() {
+  $('.side-nav__icon').on('click', function() {
+    openNav();
+  });
+
+  $('.side-nav__close-btn').on('click', function(e) {
+    e.preventDefault();
+    closeNav();
+  });
+  let bgColorR = generateRandomNum(256, 0);
+      bgColorG = generateRandomNum(256, 0);
+      bgColorB = generateRandomNum(256, 0);
+      key = generateRandomNum(3, 1);
+      bgFlag = 0,
+      n = 1;
+  if(key === 2) {
+    n = generateRandomNum(3, 1);
+  }
+  $('body').css('background-color', 'rgb(' + bgColorR + ',' + bgColorG + ',' + bgColorB + ')');
+  $('body').on('click', function() {
+    clearInterval(bgColorChanger);
+  });
+
+  let bgColorChanger = setInterval(() => {
+    if(bgColorR >= 255 || bgColorG >= 255 || bgColorB >= 255) {
+      bgFlag = 1;
+      key = generateRandomNum(3, 1);
+    } else if (bgColorR <= 0 || bgColorG <= 0 || bgColorB <= 0) {
+      bgFlag = 0;
+      key = generateRandomNum(3, 1);
+    }
+
+    if(key === 1) {
+      if(bgFlag === 1) {
+        if(bgColorR > 0) {
+          bgColorR -= generateRandomNum(3, 1);
+        } else {
+          if(bgColorG > 0) {
+            bgColorG -= generateRandomNum(3, 1);
+          } else {
+            if(bgColorB > 0) {
+              bgColorB -= generateRandomNum(3, 1);
+            }
+          }
+        }
+      } else {
+        if(bgColorR < 255) {
+          bgColorR += generateRandomNum(3, 1);
+        } else {
+          if(bgColorG < 255) {
+            bgColorG += generateRandomNum(3, 1);
+          } else {
+            if(bgColorB < 255) {
+              bgColorB += generateRandomNum(3, 1);
+            } 
+          }
+        }
+      }
+    } else if(key === 2) {
+      if(bgFlag === 1) {
+        if(n === 1) {
+          if(bgColorG > 0) {
+            bgColorG -= generateRandomNum(3, 1);
+          }
+          if(bgColorB > 0) {
+            bgColorB -= generateRandomNum(3, 1);
+          } else {
+            key = generateRandomNum(3, 0) + generateRandomNum(3, 1);
+          }
+        } else if(n === 2) {
+          if(bgColorR > 0) {
+            bgColorR -= generateRandomNum(3, 1);
+          }
+          if(bgColorB > 0) {
+            bgColorB -= generateRandomNum(3, 1);
+          } else {
+            key = generateRandomNum(3, 1);
+          }
+        } else {
+          if(bgColorR > 0) {
+            bgColorR -= generateRandomNum(3, 1);
+          } 
+          if (bgColorG > 0) {
+            bgColorR -= generateRandomNum(3, 1);
+          } else {
+            key = generateRandomNum(3, 1);
+          }
+        }
+      } else {
+        if(n === 1) {
+          if(bgColorG < 255) {
+            bgColorG += generateRandomNum(3, 1);
+          }
+          if(bgColorB < 255) {
+            bgColorB += generateRandomNum(3, 1);
+          } else {
+            key = generateRandomNum(3, 1);
+          }
+        } else if(n === 2) {
+          if(bgColorR < 255) {
+            bgColorR += generateRandomNum(3, 1);
+          }
+          if(bgColorB < 255) {
+            bgColorB += generateRandomNum(3, 1);
+          } else {
+            key = generateRandomNum(3, 1);
+          }
+        } else {
+          if(bgColorR < 255) {
+            bgColorR += generateRandomNum(3, 1);
+          }
+          if(bgColorG < 255) {
+            bgColorG += generateRandomNum(3, 1);
+          } else {
+            key = generateRandomNum(3, 1);
+          }
+        }
+      } 
+    } else {
+      if(n === 1) {
+        if(bgColorR > 0) {
+          bgColorR -= generateRandomNum(3, 1);
+        }
+        if(bgColorG > 0) {
+          bgColorG -= generateRandomNum(3, 1);
+        }
+        if(bgColorB > 0) {
+          bgColorB -= generateRandomNum(3, 1);
+        }
+      } else {
+        if(bgColorR < 255) {
+          bgColorR += generateRandomNum(3, 1);
+        }
+        if(bgColorG < 255) {
+          bgColorG += generateRandomNum(3, 1);
+        }
+        if(bgColorB < 255) {
+          bgColorB += generateRandomNum(3, 1);
+        }
+      }
+    }
+    $('body').css('background-color', 'rgb(' + bgColorR + ',' + bgColorG + ',' + bgColorB + ')');
+    changeFontColor([bgColorR, bgColorG, bgColorB]);
+  }, 50);
+});
+
+function generateRandomNum(i, j) {
+  return Math.floor(Math.random() * i) + j;
+}
+
 function openNav() {
   $('#palette').css('width', '100%');
 }
@@ -132,9 +282,9 @@ function setInputFormValue(idName, valueText) {
 
 function changeFontColor(rgb) {
   let o = Math.round((parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000);
-  let fore = o > 125 ? '#000000' : '#FFFFFF';
+  let fore = o > 125 ? '#212121' : '#FFFFFF';
 
-  $('.container__title').css('color', fore);
+  $('.container__title-front, .container__title-back, #input-value-label, #output-value-label, #input-fav-color-name-label').css('color', fore);
   $('label').css('color', fore);
 }
 
@@ -294,6 +444,9 @@ $checkbox.change(function() {
     $('#input-value').attr('placeholder', '#4286F4');
     $('#output-value-label').text('RGB');
     $('#input-value').attr('maxLength', '7');
+    $('.btn-fav').css('background-color', '#009688');
+    $('.btn-fav').css('border-color', '#009688');
+    $('.side-nav__icon').css('background-color', '#009688');
   }
   //RGB -> HEX
   else {
@@ -305,5 +458,8 @@ $checkbox.change(function() {
     $('#input-value').attr('placeholder', '(66, 134, 244)');
     $('#output-value-label').text('HEX');
     $('#input-value').attr('maxLength', '13');
+    $('.btn-fav').css('background-color', '#9C27B0');
+    $('.btn-fav').css('border-color', '#9C27B0');
+    $('.side-nav__icon').css('background-color', '#9C27B0');
   }
 });

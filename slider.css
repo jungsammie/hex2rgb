@@ -25,7 +25,7 @@
   
   .slider:before {
     position: absolute;
-    content: "TO";
+    content: "";
     text-align: center;
     line-height: 50px;
     justify-content: center;
@@ -37,7 +37,7 @@
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
+
   input:checked + .slider {
     background-color: #009688;
   }
