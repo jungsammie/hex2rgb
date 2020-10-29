@@ -1,2 +1,2 @@
 # hex2rgb
-Personal project for improving my pureJS, HTML, CSS skills
+Personal project for improving Javascript, HTML, CSS skills.

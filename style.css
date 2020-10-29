@@ -19,14 +19,14 @@ p {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     left: 0;
     background-color: #F0F0F0;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-    text-align:center;
+    text-align: center;
 }
 
 .side-nav__title {
@@ -36,7 +36,6 @@ p {
 
 .side-nav__container {
     display: grid;
-    /*grid-template-columns: auto auto auto auto auto auto auto;*/
     justify-content: space-around;
     row-gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -46,7 +45,7 @@ p {
 .side-nav__icon {
     font-size:30px;
     cursor: pointer;
-    background-color: #009688;
+    background-color: #FF4081;
     width: 70px;
     height: 50px;
     display: flex;
@@ -56,6 +55,7 @@ p {
     position: absolute;
     color: #FFEB3B;
     border-radius: 0 7px 7px 0;
+    z-index: 1;
 }
 
 .side-nav__container__item {
@@ -170,8 +170,8 @@ input:focus {
     margin-top: 5%;
     border-radius: 7px;
     padding: 10px 15px;
-    background-color: #009688;
-    border-color: #009688;
+    background-color: #FF4081;
+    border-color: #FF4081;
 }
 
 .btn-fav:hover {

@@ -1,34 +1,33 @@
 let isHex2Rgb = true;
 
 $(function() {
+  UI.displayColors();
   $('.side-nav__icon').on('click', function() {
     openNav();
   });
 
   $('.side-nav__close-btn').on('click', function(e) {
-    e.preventDefault();
     closeNav();
   });
-  let bgColorR = generateRandomNum(256, 0);
-      bgColorG = generateRandomNum(256, 0);
-      bgColorB = generateRandomNum(256, 0);
+  let bgColorR = generateRandomNum(252, 3);
+      bgColorG = generateRandomNum(252, 3);
+      bgColorB = generateRandomNum(252, 3);
       key = generateRandomNum(3, 1);
       bgFlag = 0,
-      n = 1;
-  if(key === 2) {
-    n = generateRandomNum(3, 1);
-  }
+      n = 0;
+
   $('body').css('background-color', 'rgb(' + bgColorR + ',' + bgColorG + ',' + bgColorB + ')');
   $('body').on('click', function() {
     clearInterval(bgColorChanger);
   });
 
   let bgColorChanger = setInterval(() => {
+    n = generateRandomNum(3, 1);
     if(bgColorR >= 255 || bgColorG >= 255 || bgColorB >= 255) {
-      bgFlag = 1;
+      bgFlag = 1; //minus
       key = generateRandomNum(3, 1);
     } else if (bgColorR <= 0 || bgColorG <= 0 || bgColorB <= 0) {
-      bgFlag = 0;
+      bgFlag = 0; //plus
       key = generateRandomNum(3, 1);
     }
 
@@ -60,7 +59,7 @@ $(function() {
       }
     } else if(key === 2) {
       if(bgFlag === 1) {
-        if(n === 1) {
+        if(n === 1) { //RGB(X, O, O)
           if(bgColorG > 0) {
             bgColorG -= generateRandomNum(3, 1);
           }
@@ -69,7 +68,7 @@ $(function() {
           } else {
             key = generateRandomNum(3, 0) + generateRandomNum(3, 1);
           }
-        } else if(n === 2) {
+        } else if(n === 2) { //RGB(O, X, O)
           if(bgColorR > 0) {
             bgColorR -= generateRandomNum(3, 1);
           }
@@ -78,7 +77,7 @@ $(function() {
           } else {
             key = generateRandomNum(3, 1);
           }
-        } else {
+        } else { //RGB(O, O, X)
           if(bgColorR > 0) {
             bgColorR -= generateRandomNum(3, 1);
           } 
@@ -144,20 +143,123 @@ $(function() {
     $('body').css('background-color', 'rgb(' + bgColorR + ',' + bgColorG + ',' + bgColorB + ')');
     changeFontColor([bgColorR, bgColorG, bgColorB]);
   }, 50);
+
+  //Event: Add a color
+$('.btn-fav').on('click', (e) => {
+  e.preventDefault();
+  //Get color codes
+  let hexFav, rgbFav, nameFav;
+  //Save fav color
+  if (checkValidation($('#input-value').val()) && $('#input-fav-color-name').val().length != 0) {
+    if (isHex2Rgb === true) {
+      hexFav = $('#input-value').val();
+      rgbFav = $('#output-value').val();
+    } else {
+      rgbFav = $('#input-value').val();
+      hexFav = $('#output-value').val();
+    }
+    nameFav = $('#input-fav-color-name').val();
+
+    //Instatntiate color
+    const color = new Color(hexFav, rgbFav, nameFav);
+
+    //Add color to UI (palette)
+    UI.addColorToPalette(color);
+
+    //Add color to storage
+    let result = Store.addColor(color);
+
+    //Clear the form
+    $('#hex2rgb-form').trigger('reset');
+    $('#input-fav-color-name').val('');
+
+    UI.showAlert('Your favourite color has added to the Palette!', 'success');
+    changeBackgroundColor('#F0F0F0');
+    changeFontColor([255, 255, 255]);
+  } else if ($('#input-fav-color-name').val().length === 0) { //If color name hasn't set yet
+    UI.showAlert('Please set the name of your favourite color!', 'danger');
+  } else { //If both HEX and RGB values are not valid
+    UI.showAlert('Please check if HEX code or RGB code is valid or not.', 'danger');
+  }
 });
 
+//Event: Remove a color
+$('.side-nav__container').on('click', (e) => {
+  //Remove color from UI
+  let status = UI.deleteColor(e.target);
+
+  if (status === 0) {
+    Store.removeColor(e.target.nextSibling.nextElementSibling.firstChild.nextElementSibling.firstChild.textContent);
+    UI.showAlert('Color Removed!', 'success');
+  }
+});
+
+//Event: Toggle button
+let $checkbox = $( "input:checkbox" );
+$checkbox.change(function() {
+  $('#input-value').val('');
+  $('#output-value').val('');
+  //HEX -> RGB
+  if ($checkbox.is(':checked')) {
+    isHex2Rgb = true;
+    document.title = 'HEX TO RGB';
+    $('.container__title-front').text('HEX');
+    $('.container__title-back').text('RGB');
+    $('#input-value-label').text('HEX');
+    $('#input-value').attr('placeholder', '#4286F4');
+    $('#output-value-label').text('RGB');
+    $('#input-value').attr('maxLength', '7');
+    $('.btn-fav').css('background-color', '#FF4081');
+    $('.btn-fav').css('border-color', '#FF4081');
+    $('.side-nav__icon').css('background-color', '#FF4081');
+  }
+  //RGB -> HEX
+  else {
+    isHex2Rgb = false;
+    document.title = 'RGB TO HEX';
+    $('.container__title-front').text('RGB');
+    $('.container__title-back').text('HEX');
+    $('#input-value-label').text('RGB');
+    $('#input-value').attr('placeholder', '(66,134,244)');
+    $('#output-value-label').text('HEX');
+    $('#input-value').attr('maxLength', '13');
+    $('.btn-fav').css('background-color', '#9C27B0');
+    $('.btn-fav').css('border-color', '#9C27B0');
+    $('.side-nav__icon').css('background-color', '#9C27B0');
+  }
+});
+});
+
+/**
+ * genereateRandomNum() generates random number
+ * for background color changing effect
+ * 
+ * @param {*} i 
+ * @param {*} j 
+ */
 function generateRandomNum(i, j) {
   return Math.floor(Math.random() * i) + j;
 }
 
+/**
+ * openNav() makes favourite colour palette width 100
+ * giving effect like slide open 
+ */
 function openNav() {
   $('#palette').css('width', '100%');
 }
 
+/**
+ * closeNav() makes favourite colour palette width 0
+ * giving effect like slide close
+ */
 function closeNav() {
   $('#palette').css('width', '0');
 }
 
+/**
+ * getValue() manages user input
+ */
 function getValue() {
   //Reset value in other fields
   $('#output-value').val('');
@@ -199,6 +301,11 @@ function getValue() {
   }
 }
 
+/**
+ * checkValidation() checks validation of user's input
+ * @param {String} val 
+ * @return {Boolean}  
+ */
 function checkValidation(val) {
   let rex;
   //HEX -> RGB
@@ -212,6 +319,10 @@ function checkValidation(val) {
   return rex.test(val);
 }
 
+/**
+ * hexToRgb() changes hex color code to rgb code
+ * @param {String} hex 
+ */
 function hexToRgb(hex) {
   let res = hex.split('#'), //remove hashtag(#)
       val = res[1],
@@ -244,6 +355,10 @@ function hexToRgb(hex) {
   changeFontColor(rgb);
 }
 
+/**
+ * rgbToHex() changes rgb color code to hex code
+ * @param {String} rgb 
+ */
 function rgbToHex(rgb) {
   let res = rgb.replace('(', '').replace(')', ''),
       val = res.split(','),
@@ -272,20 +387,35 @@ function rgbToHex(rgb) {
   changeFontColor([val[0], val[1], val[2]]);
 }
 
+/**
+ * changeBackgroundColor() changes body background color
+ * @param {String} hex 
+ */
 function changeBackgroundColor(hex) {
   $('body').css('background-color', hex);
 }
 
+/**
+ * setInputFormValue() can set valueText 
+ * to the tag which has the idName
+ * @param {String} idName 
+ * @param {String} valueText 
+ */
 function setInputFormValue(idName, valueText) {
   $('#'+idName).val(valueText);
 }
 
+/**
+ * changeFontColor() changes the font color depends background color
+ * @param {Array} rgb 
+ */
 function changeFontColor(rgb) {
   let o = Math.round((parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000);
   let fore = o > 125 ? '#212121' : '#FFFFFF';
 
+  $('.container__title-front, .container__title-back, #input-value-label, #output-value-label, #input-fav-color-name-label').css('transition', 'color 0.5s ease');
   $('.container__title-front, .container__title-back, #input-value-label, #output-value-label, #input-fav-color-name-label').css('color', fore);
-  $('label').css('color', fore);
+  // $('label').css('color', fore);
 }
 
 //Color class: Color object
@@ -373,93 +503,3 @@ class Store {
     localStorage.setItem('colors', JSON.stringify(colors));
   }
 }
-
-//Event: display colors
-$(function() {
-  UI.displayColors();
-});
-
-//Event: Add a color
-$('.btn-fav').on('click', (e) => {
-  e.preventDefault();
-  //Get color codes
-  let hexFav, rgbFav, nameFav;
-  //Save fav color
-  if (checkValidation($('#input-value').val()) && $('#input-fav-color-name').val().length != 0) {
-    if (isHex2Rgb === true) {
-      hexFav = $('#input-value').val();
-      rgbFav = $('#output-value').val();
-    } else {
-      rgbFav = $('#input-value').val();
-      hexFav = $('#output-value').val();
-    }
-    nameFav = $('#input-fav-color-name').val();
-
-    //Instatntiate color
-    const color = new Color(hexFav, rgbFav, nameFav);
-
-    //Add color to UI (palette)
-    UI.addColorToPalette(color);
-
-    //Add color to storage
-    let result = Store.addColor(color);
-
-    //Clear the form
-    $('#hex2rgb-form').trigger('reset');
-    $('#input-fav-color-name').val('');
-
-    UI.showAlert('Your favourite color has added to the Palette!', 'success');
-    changeBackgroundColor('#F0F0F0');
-    changeFontColor([255, 255, 255]);
-  } else if ($('#input-fav-color-name').val().length === 0) { //If color name hasn't set yet
-    UI.showAlert('Please set the name of your favourite color!', 'danger');
-  } else { //If both HEX and RGB values are not valid
-    UI.showAlert('Please check if HEX code or RGB code is valid or not.', 'danger');
-  }
-});
-
-//Event: Remove a color
-$('.side-nav__container').on('click', (e) => {
-  //Remove color from UI
-  let status = UI.deleteColor(e.target);
-
-  if (status === 0) {
-    Store.removeColor(e.target.nextSibling.nextElementSibling.firstChild.nextElementSibling.firstChild.textContent);
-    UI.showAlert('Color Removed!', 'success');
-  }
-});
-
-//Event: Toggle button
-let $checkbox = $( "input:checkbox" );
-$checkbox.change(function() {
-  $('#input-value').val('');
-  $('#output-value').val('');
-  //HEX -> RGB
-  if ($checkbox.is(':checked')) {
-    isHex2Rgb = true;
-    document.title = 'HEX TO RGB';
-    $('.container__title-front').text('HEX');
-    $('.container__title-back').text('RGB');
-    $('#input-value-label').text('HEX');
-    $('#input-value').attr('placeholder', '#4286F4');
-    $('#output-value-label').text('RGB');
-    $('#input-value').attr('maxLength', '7');
-    $('.btn-fav').css('background-color', '#009688');
-    $('.btn-fav').css('border-color', '#009688');
-    $('.side-nav__icon').css('background-color', '#009688');
-  }
-  //RGB -> HEX
-  else {
-    isHex2Rgb = false;
-    document.title = 'RGB TO HEX';
-    $('.container__title-front').text('RGB');
-    $('.container__title-back').text('HEX');
-    $('#input-value-label').text('RGB');
-    $('#input-value').attr('placeholder', '(66, 134, 244)');
-    $('#output-value-label').text('HEX');
-    $('#input-value').attr('maxLength', '13');
-    $('.btn-fav').css('background-color', '#9C27B0');
-    $('.btn-fav').css('border-color', '#9C27B0');
-    $('.side-nav__icon').css('background-color', '#9C27B0');
-  }
-});
