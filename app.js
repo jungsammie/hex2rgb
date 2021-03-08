@@ -209,9 +209,9 @@ $checkbox.change(function() {
     $('#input-value').attr('placeholder', '#4286F4');
     $('#output-value-label').text('RGB');
     $('#input-value').attr('maxLength', '7');
-    $('.btn-fav').css('background-color', '#FF4081');
-    $('.btn-fav').css('border-color', '#FF4081');
-    $('.side-nav__icon').css('background-color', '#FF4081');
+    $('.btn-fav').css('background-color', 'rgb(91,158,251)'); //#FF4081
+    $('.btn-fav').css('border-color', 'rgb(91,158,251)');
+    $('.side-nav__icon').css('background-color', 'rgb(91,158,251)');
   }
   //RGB -> HEX
   else {
@@ -223,9 +223,9 @@ $checkbox.change(function() {
     $('#input-value').attr('placeholder', '(66,134,244)');
     $('#output-value-label').text('HEX');
     $('#input-value').attr('maxLength', '13');
-    $('.btn-fav').css('background-color', '#9C27B0');
-    $('.btn-fav').css('border-color', '#9C27B0');
-    $('.side-nav__icon').css('background-color', '#9C27B0');
+    $('.btn-fav').css('background-color', 'rgb(84,208,104)'); //#9C27B0
+    $('.btn-fav').css('border-color', 'rgb(84,208,104)');
+    $('.side-nav__icon').css('background-color', 'rgb(84,208,104)');
   }
 });
 });

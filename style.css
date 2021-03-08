@@ -1,180 +1,193 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR|Open+Sans+Condensed:300,700');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap');
 @import url('./slider.css');
 
 body {
-    all: unset;
-    height: 100%;
-    width: 100%;
-    font-family: 'Open Sans Condensed','Noto Sans KR', sans-serif;
-    background-color: #F0F0F0;
-    font-weight: 300;
-    position: relative;
+  all: unset;
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  font-weight: 300;
+  position: relative;
 }
 
 p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .side-nav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    background-color: #F0F0F0;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    text-align: center;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  text-align: center;
 }
 
 .side-nav__title {
-    color: #212121;
-    font-size: 50px;
+  color: #212121;
+  font-size: 50px;
 }
 
 .side-nav__container {
-    display: grid;
-    justify-content: space-around;
-    row-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    margin: 60px;
+  display: grid;
+  justify-content: space-around;
+  row-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  margin: 60px;
 }
 
 .side-nav__icon {
-    font-size:30px;
-    cursor: pointer;
-    background-color: #FF4081;
-    width: 70px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    position: absolute;
-    color: #FFEB3B;
-    border-radius: 0 7px 7px 0;
-    z-index: 1;
+  font-size: 24px;
+  cursor: pointer;
+  background-color: rgb(91,158,251);
+  width: 70px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  position: absolute;
+  color: #ffeb3b;
+  border-radius: 0 7px 7px 0;
+  z-index: 1;
 }
 
 .side-nav__container__item {
-    position: relative;
-    height: 200px;
-    width: 150px;
-    font-size: 14px;
-    text-align: left;
+  position: relative;
+  height: 200px;
+  width: 150px;
+  font-size: 14px;
+  text-align: left;
 }
 
 .side-nav__container__item > .side-nav__container__item__delete {
-    font-size: 25px;
-    text-align: left;
-    margin: 5px 0 0 15px;
-    width: 20px;
-    color: #F0F0F0;
-    cursor: pointer;
+  font-size: 25px;
+  text-align: left;
+  margin: 5px 0 0 15px;
+  width: 20px;
+  color: #f0f0f0;
+  cursor: pointer;
 }
 
 .side-nav__container__item__data {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    background-color: #FFFFFF;
-    color: black;
-    padding: 15px 0 15px 15px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: #ffffff;
+  color: black;
+  padding: 15px 0 15px 15px;
 }
 
 .side-nav__container__item__data > .side-nav__container__item__data__name {
-    font-size: 18px;
-    margin-top: 5px;
-    overflow: hidden;
+  font-size: 18px;
+  margin-top: 5px;
+  overflow: hidden;
 }
 
 .side-nav .side-nav__close-btn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-    color: black;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: black;
+  cursor: pointer;
 }
 
 .container__title {
-    font-size: 80px;
-    font-weight: 800;
+  font-size: 80px;
+  font-weight: 800;
 }
 
 .container__form-container {
-    margin-top: 12%;
+  margin-top: 12%;
 }
 
 .row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .col {
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
 
 label {
-    width: 100%;
-    font-size: 30px;
-    text-align: left;
-    margin: 10px;
+  width: 100%;
+  font-size: 30px;
+  text-align: left;
+  margin: 10px;
 }
 
 .container__form-container__input {
-    outline: 0;
-    width: 100%;
-    border: none;
-    /*border-bottom: 3px solid#212121;*/
-    padding: 5px 0 5px 20px;
-    border-radius: 7px;
-    font-size: 35px;
-    background-color: #FFFFFF;
+  outline: 0;
+  width: 100%;
+  border: none;
+  /*border-bottom: 3px solid#212121;*/
+  padding: 32px 0 32px 20px;
+  border-radius: 7px;
+  font-size: 35px;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(99, 99, 107, 0.2);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border-radius: 10px;
 }
 
-input:focus {
-    background-color: #FFFFFF;
+.container__form-container__input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(99, 99, 107, 0.2);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border-radius: 10px;
+  border: none;
+}
+
+.container__form-container__input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
 }
 
 .non-valid {
-    outline: 0;
-    width: 100%;
-    border-radius: 7px 7px 0 0;
-    border: none;
-    font-size: 35px;
-    padding: 5px 0 5px 20px;
-    border-bottom: 3px solid#FF0000 !important;
-    color: #212121;
+  outline: 0;
+  width: 100%;
+  border-radius: 7px 7px 0 0;
+  border: none;
+  font-size: 35px;
+  padding: 5px 0 5px 20px;
+  border-bottom: 3px solid#FF0000 !important;
+  color: #212121;
 }
 
 .container__form-container__fav-name-form-container {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
 .container__form-container__label {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 .btn-fav {
-    font-size: 30px;
-    font-weight: 300;
-    margin-top: 5%;
-    border-radius: 7px;
-    padding: 10px 15px;
-    background-color: #FF4081;
-    border-color: #FF4081;
+  font-size: 30px;
+  font-weight: 300;
+  margin-top: 5%;
+  border-radius: 7px;
+  padding: 10px 32px;
+  background-color: rgb(91,158,251);
+  border-color: rgb(91,158,251);
 }
 
 .btn-fav:hover {
-    background-color: #FFEB3B;
-    border-color: #FFEB3B;
+  background-color: #ffeb3b;
+  border-color: #ffeb3b;
 }
