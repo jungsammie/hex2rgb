@@ -2,18 +2,26 @@ let isHex2Rgb = true;
 
 $(function () {
   $('body').addClass('gradation-background');
-  
+
   UI.displayColors();
   $('.side-nav__icon').on('click', function () {
+    $('#blur').removeClass('unvisiable');
     openNav();
   });
 
   $('.side-nav__close-btn').on('click', function (e) {
+    $('#blur').addClass('unvisiable');
     closeNav();
   });
 
-  $('.form-control').focus(function(){
+  $('.form-control').focus(function () {
     $('body').removeClass('gradation-background');
+  });
+
+  $('#output-value-label').on('click', function (e) {
+    if (e.target.id === 'copy') {
+      copyColorCode();
+    }
   });
 
   //Event: Add a color
@@ -54,12 +62,12 @@ $(function () {
       changeFontColor([255, 255, 255]);
     } else if ($('#input-fav-color-name').val().length === 0) {
       //If color name hasn't set yet
-      UI.showAlert('Please set the name of your favourite color!', 'danger');
+      UI.showAlert('Please set the name of your favourite color!', 'warning');
     } else {
       //If both HEX and RGB values are not valid
       UI.showAlert(
         'Please check if HEX code or RGB code is valid or not.',
-        'danger',
+        'warning',
       );
     }
   });
@@ -74,7 +82,7 @@ $(function () {
         e.target.nextSibling.nextElementSibling.firstChild.nextElementSibling
           .firstChild.textContent,
       );
-      UI.showAlert('Color Removed!', 'success');
+      // UI.showAlert('Color Removed!', 'success');
     }
   });
 
@@ -91,7 +99,10 @@ $(function () {
       $('.container__title-back').text('RGB');
       $('#input-value-label').text('HEX');
       $('#input-value').attr('placeholder', '#4286F4');
-      $('#output-value-label').text('RGB');
+      // $('#output-value-label').text('RGB');
+      $('#output-value-label').html(
+        'RGB <i class="fas fa-copy" id="copy"></i>',
+      );
       $('#input-value').attr('maxLength', '7');
       $('.btn-fav').css('background-color', 'rgb(91,158,251)'); //#FF4081
       $('.btn-fav').css('border-color', 'rgb(91,158,251)');
@@ -104,9 +115,12 @@ $(function () {
       $('.container__title-front').text('RGB');
       $('.container__title-back').text('HEX');
       $('#input-value-label').text('RGB');
-      $('#input-value').attr('placeholder', '(66,134,244)');
-      $('#output-value-label').text('HEX');
-      $('#input-value').attr('maxLength', '13');
+      $('#input-value').attr('placeholder', 'rgb(66,134,244)');
+      // $('#output-value-label').text('');
+      $('#output-value-label').html(
+        'HEX <i class="fas fa-copy" id="copy"></i>',
+      );
+      $('#input-value').attr('maxLength', '18');
       $('.btn-fav').css('background-color', 'rgb(84,208,104)'); //#9C27B0
       $('.btn-fav').css('border-color', 'rgb(84,208,104)');
       $('.side-nav__icon').css('background-color', 'rgb(84,208,104)');
@@ -130,7 +144,7 @@ function generateRandomNum(i, j) {
  * giving effect like slide open
  */
 function openNav() {
-  $('#palette').css('width', '100%');
+  $('#palette').css('width', '40%');
 }
 
 /**
@@ -200,7 +214,7 @@ function checkValidation(val) {
   }
   //RGB -> HEX
   else {
-    rex = /\((0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d)\)$/;
+    rex = /(rgb|RGB)\((0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s?(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d),\s?(0|255|25[0-4]|2[0-4]\d|1\d\d|0?\d?\d)\)$/;
   }
   return rex.test(val);
 }
@@ -224,7 +238,7 @@ function hexToRgb(hex) {
     g = parseInt('0x' + g, 16);
     b = parseInt('0x' + b, 16);
     rgb = [r, g, b];
-    result = '(' + r + ', ' + g + ', ' + b + ')';
+    result = 'rgb(' + r + ', ' + g + ', ' + b + ')';
   } else {
     //#123456, 6 digits hex code
     let r = val.slice(0, 2),
@@ -235,7 +249,8 @@ function hexToRgb(hex) {
     g = parseInt('0x' + g, 16);
     b = parseInt('0x' + b, 16);
     rgb = [r, g, b];
-    result = '(' + r + ', ' + g + ', ' + b + ')';
+    //FIXME:
+    result = 'rgb(' + r + ', ' + g + ', ' + b + ')';
   }
   $('#output-value').val(result);
   changeBackgroundColor(hex);
@@ -247,7 +262,7 @@ function hexToRgb(hex) {
  * @param {String} rgb
  */
 function rgbToHex(rgb) {
-  let res = rgb.replace('(', '').replace(')', ''),
+  let res = rgb.substring(3).replace('(', '').replace(')', ''),
     val = res.split(','),
     r = val[0],
     g = val[1],
@@ -312,6 +327,16 @@ function changeFontColor(rgb) {
   // $('label').css('color', fore);
 }
 
+function copyColorCode() {
+  let copyText = document.getElementById('output-value');
+  if (copyText !== '') {
+    copyText.focus();
+    copyText.select();
+    copyText.setSelectionRange(0, copyText.value.length);
+    document.execCommand('copy');
+  }
+}
+
 //Color class: Color object
 class Color {
   constructor(hex, rgb, name) {
@@ -372,7 +397,6 @@ class UI {
 
 //Store class: Handles storage(local Storage)
 class Store {
-  // TODO: color margin
   static addColor(color) {
     const colors = Store.getColors();
 

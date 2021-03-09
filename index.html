@@ -21,11 +21,10 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div id="blur" class="unvisiable"></div>
     <div id="palette" class="side-nav">
       <h1 class="side-nav__title text-center">Color Palette</h1>
-      <span
-        class="side-nav__close-btn"
-        >&times;</span>
+      <span class="side-nav__close-btn">&times;</span>
       <div class="side-nav__container">
         <!--Fav color list-->
       </div>
@@ -57,8 +56,8 @@
                   for="input-value"
                   id="input-value-label"
                   class="text-left"
-                  >HEX</label
-                >
+                  >HEX
+                </label>
                 <input
                   type="text"
                   oninput="getValue()"
@@ -73,8 +72,9 @@
             <div class="row">
               <div class="col col-lg-4">
                 <label for="output-value" id="output-value-label" class=""
-                  >RGB</label
-                >
+                  >RGB
+                  <i class="fas fa-copy" id="copy"></i>
+                </label>
                 <input
                   type="text"
                   class="container__form-container__input form-control"
@@ -91,7 +91,9 @@
           >
             <div class="row">
               <div class="col col-lg-4">
-                <label for="input-fav-color-name" id="input-fav-color-name-label"
+                <label
+                  for="input-fav-color-name"
+                  id="input-fav-color-name-label"
                   >Color Name</label
                 >
                 <input
@@ -107,9 +109,7 @@
             class="container__form-container__fav-name-form-button-container"
           >
             <div class="row">
-              <button type="button" class="btn btn-primary btn-fav">
-                ADD
-              </button>
+              <button type="button" class="btn btn-primary btn-fav">ADD</button>
             </div>
           </div>
         </form>
